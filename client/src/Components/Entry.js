@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Entry = ({recipe})=>{
+const Entry = ({recipe, index, select})=>{
   return(
-    <div>
+    <div onClick={()=>select(recipe, index)}>
     {recipe}
     </div>
   )

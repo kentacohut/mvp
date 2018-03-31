@@ -4,15 +4,17 @@ class Form extends Component{
   constructor(props){
     super(props);
     this.state = {
-      title: null,
-      ingredients: null,
-      time: null,
-      dietary: null
+      title: '',
+      ingredients: '',
+      time: '',
+      dietary: '',
+      instructions: ''
     }
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleIngredientsChange = this.handleIngredientsChange.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handleDietaryChange = this.handleDietaryChange.bind(this);
+    this.handleInstructionsChange = this.handleInstructionsChange.bind(this);
   }
 
   handleTitleChange(e){
@@ -20,7 +22,8 @@ class Form extends Component{
   }
 
   handleIngredientsChange(e){
-    this.setState({ingredients: e.target.value.split(/, ?/)})
+    let ingredients = e.target.value;
+    this.setState({ingredients: ingredients})
   }
 
   handleTimeChange(e){
@@ -31,30 +34,38 @@ class Form extends Component{
     this.setState({dietary: e.target.value})
   }
 
+  handleInstructionsChange(e){
+    this.setState({instructions: e.target.value})
+  }
+
   render(){
     let recipe = {
-      name: this.state.title,
-      directions: 'String',
-      time: this.state.time,
-      ingredients: this.state.ingredients,
-      dietary: this.state.dietary,
-      yields: 15,
-      image: 'String',
-      originalUrl: 'String'
-    }
+            name: this.state.title,
+            time: this.state.time,
+            ingredients: this.state.ingredients.split(/, ?/),
+            instructions: this.state.instructions,
+            dietary: this.state.dietary
+          }
     return (
-      <div 
-        className="entry" 
+      <div className="entry">
+        <h2>Enter Your Recipe</h2>
+        <form 
         onSubmit={(event) => {
-
-          this.props.handleSubmit(event, recipe)
+          this.props.handleSubmit(event, recipe);
+          this.setState({
+            title: '',
+            ingredients: '',
+            time: '',
+            dietary: '',
+            instructions: ''
+            });
         }}>
-        <form>
         Recipe Title:<br/>
         <input 
           type="text" 
           name="title" 
           placeholder="Enter Recipe Title..."
+          value={this.state.title}
           onChange={this.handleTitleChange}/>
         <br/>
         Ingredients:<br/>
@@ -63,19 +74,31 @@ class Form extends Component{
           rows="4"
           cols="50"
           placeholder="Enter ingredients seperated by commas..."
+          value={this.state.ingredients}
           onChange={this.handleIngredientsChange}/>
+        <br/>
+        Directions:<br/>
+        <textarea 
+          name="directions"
+          rows="4"
+          cols="50"
+          placeholder="Enter cooking instructions..."
+          value={this.state.instructions}
+          onChange={this.handleInstructionsChange}/>
         <br/>
         Cooking Time:<br/>
         <input 
           type="text" 
           name="time" 
           placeholder="Enter Cooking Time..."
+          value={this.state.time}
           onChange={this.handleTimeChange}/>
         <br/>
         Dietary needs?<br/>
         <select 
           name="dietary"
-          onChange={this.handleDietaryChange}>
+          onChange={this.handleDietaryChange}
+          value={this.state.dietary}>
           <option value="null">None</option>
           <option value="vegetarian">Vegetarian</option>
           <option value="vegan">Vegan</option>

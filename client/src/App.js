@@ -12,6 +12,7 @@ class App extends Component {
       cookbook: []
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRecipeSelect = this.handleRecipeSelect.bind(this);
   }
 
   componentDidMount(){
@@ -39,22 +40,17 @@ class App extends Component {
     let that = this;
     console.log(recipe)
     event.preventDefault();
-    axios.post('/api/recipe/post', {
-      name: 'String',
-      directions: 'String',
-      time: 10,
-      ingredients: [],
-      dietary: 'String',
-      yields: 15,
-      image: 'String',
-      originalUrl: 'String'
-    })
+    axios.post('/api/recipe/post', recipe)
     .then((response)=>{
       that.getRecipes();
     })
     .catch((error)=>{
       console.log(error);
     })
+  }
+
+  handleRecipeSelect(title, index){
+    console.log(title, index);
   }
 
   render() {
@@ -65,7 +61,7 @@ class App extends Component {
         </div>
         <div className="top">
         <Form handleSubmit={this.handleSubmit}/>
-        <Cookbook cookbook={this.state.cookbook}/>
+        <Cookbook cookbook={this.state.cookbook} select={this.handleRecipeSelect}/>
         </div>
         <Recipe />
       </div>
