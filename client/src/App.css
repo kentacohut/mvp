@@ -21,3 +21,8 @@
   display: flex;
   justify-content: space-evenly;
 }
+
+.App .display {
+  display: flex;
+  flex-direction: column;
+}

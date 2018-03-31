@@ -9,7 +9,8 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      cookbook: []
+      cookbook: [],
+      currentRecipe: null
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRecipeSelect = this.handleRecipeSelect.bind(this);
@@ -51,6 +52,9 @@ class App extends Component {
 
   handleRecipeSelect(title, index){
     console.log(title, index);
+    this.setState({
+      currentRecipe: title
+    })
   }
 
   render() {
@@ -60,10 +64,17 @@ class App extends Component {
           <h1>RecipeVault</h1>
         </div>
         <div className="top">
-        <Form handleSubmit={this.handleSubmit}/>
-        <Cookbook cookbook={this.state.cookbook} select={this.handleRecipeSelect}/>
+        <Form 
+          handleSubmit={this.handleSubmit}/>
+        <Cookbook 
+          cookbook={this.state.cookbook} 
+          select={this.handleRecipeSelect}/>
         </div>
-        <Recipe />
+        <div className="display">
+          <h2>Recipe</h2>
+          <Recipe 
+            current={this.state.currentRecipe}/>
+        </div>
       </div>
     );
   }
