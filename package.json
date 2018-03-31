@@ -1,0 +1,30 @@
+{
+  "name": "mvp",
+  "version": "1.0.0",
+  "description": "cookbook",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.2",
+    "concurrently": "^3.5.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon --inspect index.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently --kill-others-on-fail \"npm start\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kentacohut/hrsf90-mvp.git"
+  },
+  "author": "Steve Hallam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kentacohut/hrsf90-mvp/issues"
+  },
+  "homepage": "https://github.com/kentacohut/hrsf90-mvp#readme"
+}

@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  > Recipe Vault
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > For anyone who loves to cook. 
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > Create or find recipes and keep them saved in one convenient location. Filter your recipes by different criteria e.g. total time, ingredients, and dietary requirements. 
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > Do you have recipes saved across multiple bookmarks or in different cookbooks? Are you in a bind and need to find a quick recipe?
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > Recipe Vault comes to the rescue by keeping all of your recipes in one location. Either input your own favorite recipes or try searching our database for what you are craving. Now you can easily search your recipes for what you need.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > "Use RecipeVault to keep your recipes organized and at your fingertips." - Steve Hallam
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > If you can type you can start using Recipe Vault.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "I can now spend more time cooking and less time searching. Thanks Recipe Vault!" - Matthew B. Sweeney
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Head to RecipeVault.com and start cooking.
