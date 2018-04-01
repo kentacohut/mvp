@@ -28,7 +28,6 @@ class App extends Component {
     let that = this;
     axios.get('/api/cookbook')
     .then((response)=>{
-      console.log(response.data);
       for(let i = 0; i < response.data.length; i++) {
         recipes.push(response.data[i].title);
       }

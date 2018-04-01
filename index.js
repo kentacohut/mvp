@@ -41,6 +41,11 @@ app.get('/api/recipe/remove', (req, res)=>{
   })
 });
 
+app.get('/api/search', (req, res)=>{
+  let query = req.query.search;
+  console.log(query);
+})
+
 app.post('/api/recipe/post', (req, res)=>{
   let post = req.body;
   let recipe = {
