@@ -8,7 +8,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.static('./client/public'));
-// app.use(express.bodyParser());
 
 app.get('/api/cookbook', (req, res)=>{
   db.findAll((error, recipes)=>{
@@ -16,6 +15,17 @@ app.get('/api/cookbook', (req, res)=>{
       console.log(error);
     } else {
       res.send(recipes);
+    }
+  })
+});
+
+app.get('/api/recipe/get', (req, res)=>{
+  let name = req.query.name;
+  db.findOne(name, (error, recipe)=>{
+    if(error) {
+      console.log(error);
+    } else {
+      res.send(recipe);
     }
   })
 });

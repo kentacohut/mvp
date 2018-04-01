@@ -6,9 +6,10 @@ const dbURI = `mongodb://localhost:27017/RecipeVault`;
 mongoose.connect(dbURI);
 
 const recipeSchema = mongoose.Schema({
-    name: String,
+    name: {type: String, unique: true},
     directions: String,
-    time: Number,
+    hours: Number,
+    mins: Number,
     ingredients: [],
     dietary: String,
     yields: Number,
@@ -24,8 +25,8 @@ function insertMany(array, callback) {
 function insertOne(recipe, callback) {
   Recipes.create(recipe, callback);
 }
-function findOne(id, callback) {
-  Recipes.findOne().where('id').equals(id).exec(callback);
+function findOne(name, callback) {
+  Recipes.findOne().where('name').equals(name).exec(callback);
 }
 function findAll(callback){
   Recipes.find({}, 'name', callback);

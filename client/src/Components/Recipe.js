@@ -1,8 +1,12 @@
 import React from 'react';
 
-const Recipe = ({current})=>{
+const Recipe = ({recipe})=>{
   return ( 
-    !current ? <div>Select a recipe from your cookbook...</div> : <div>{current}</div>
+    !recipe ? <div>Select a recipe from your cookbook...</div> : 
+    <div>
+      {recipe.name}
+      {recipe.ingredients.map((ingredient)=><div>{ingredient}</div>)}
+    </div>
   ) 
 }
 

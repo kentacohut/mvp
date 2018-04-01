@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       cookbook: [],
-      currentRecipe: null
+      selected: null
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRecipeSelect = this.handleRecipeSelect.bind(this);
@@ -38,8 +38,8 @@ class App extends Component {
   }
 
   handleSubmit(event, recipe){
+    console.log(recipe);
     let that = this;
-    console.log(recipe)
     event.preventDefault();
     axios.post('/api/recipe/post', recipe)
     .then((response)=>{
@@ -52,8 +52,19 @@ class App extends Component {
 
   handleRecipeSelect(title, index){
     console.log(title, index);
-    this.setState({
-      currentRecipe: title
+    let that = this;
+    axios.get('/api/recipe/get', {
+      params: {
+        name: title
+      }
+    })
+    .then((response)=>{
+      that.setState({
+        selected: response.data
+      });
+    })
+    .catch((error)=>{
+      console.log(error);
     })
   }
 
@@ -73,7 +84,7 @@ class App extends Component {
         <div className="display">
           <h2>Recipe</h2>
           <Recipe 
-            current={this.state.currentRecipe}/>
+            recipe={this.state.selected}/>
         </div>
       </div>
     );

@@ -6,13 +6,15 @@ class Form extends Component{
     this.state = {
       title: '',
       ingredients: '',
-      time: '',
+      hours: '',
+      mins: '',
       dietary: '',
       instructions: ''
     }
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleIngredientsChange = this.handleIngredientsChange.bind(this);
-    this.handleTimeChange = this.handleTimeChange.bind(this);
+    this.handleHourChange = this.handleHourChange.bind(this);
+    this.handleMinChange = this.handleMinChange.bind(this);
     this.handleDietaryChange = this.handleDietaryChange.bind(this);
     this.handleInstructionsChange = this.handleInstructionsChange.bind(this);
   }
@@ -26,8 +28,12 @@ class Form extends Component{
     this.setState({ingredients: ingredients})
   }
 
-  handleTimeChange(e){
-    this.setState({time: e.target.value})
+  handleHourChange(e){
+    this.setState({hours: e.target.value})
+  }
+
+  handleMinChange(e){
+    this.setState({mins: e.target.value})
   }
 
   handleDietaryChange(e){
@@ -41,7 +47,8 @@ class Form extends Component{
   render(){
     let recipe = {
             name: this.state.title,
-            time: this.state.time,
+            hours: this.state.hours,
+            mins: this.state.mins,
             ingredients: this.state.ingredients.split(/, ?/),
             instructions: this.state.instructions,
             dietary: this.state.dietary
@@ -55,7 +62,8 @@ class Form extends Component{
           this.setState({
             title: '',
             ingredients: '',
-            time: '',
+            hours: '',
+            mins: '',
             dietary: '',
             instructions: ''
             });
@@ -88,11 +96,17 @@ class Form extends Component{
         <br/>
         Cooking Time:<br/>
         <input 
-          type="text" 
-          name="time" 
-          placeholder="Enter Cooking Time..."
-          value={this.state.time}
-          onChange={this.handleTimeChange}/>
+          type="number" 
+          name="hours" 
+          placeholder="Hours..."
+          value={this.state.hours}
+          onChange={this.handleHourChange}/>
+        <input 
+          type="number" 
+          name="mins" 
+          placeholder="Minutes..."
+          value={this.state.mins}
+          onChange={this.handleMinChange}/>
         <br/>
         Dietary needs?<br/>
         <select 
