@@ -5,51 +5,56 @@ class Form extends Component{
     super(props);
     this.state = {
       title: '',
-      ingredients: '',
+      ingredients: [],
+      ingredientType: '',
+      ingredientQuant: '',
+      ingredientMeas: '',
       hours: '',
       mins: '',
       dietary: '',
       instructions: ''
     }
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.handleIngredientsChange = this.handleIngredientsChange.bind(this);
-    this.handleHourChange = this.handleHourChange.bind(this);
-    this.handleMinChange = this.handleMinChange.bind(this);
-    this.handleDietaryChange = this.handleDietaryChange.bind(this);
-    this.handleInstructionsChange = this.handleInstructionsChange.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleIngredientsAdd = this.handleIngredientsAdd.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
-  handleTitleChange(e){
-    this.setState({title: e.target.value})
+  handleChange(e){
+   this.setState({[e.target.name]: e.target.value})
   }
 
-  handleIngredientsChange(e){
-    let ingredients = e.target.value;
-    this.setState({ingredients: ingredients})
+  handleIngredientsAdd(){
+    let ingredients = this.state.ingredients;
+    let item = {
+      type: this.state.ingredientType,
+      quant: this.state.ingredientQuant,
+      meas: this.state.ingredientMeas
+    }
+    ingredients.push(item);
+    this.setState({
+      ingredients: ingredients,
+      ingredientType: '',
+      ingredientMeas: '',
+      ingredientQuant: ''
+    })
+    console.log(item)
   }
 
-  handleHourChange(e){
-    this.setState({hours: e.target.value})
-  }
-
-  handleMinChange(e){
-    this.setState({mins: e.target.value})
-  }
-
-  handleDietaryChange(e){
-    this.setState({dietary: e.target.value})
-  }
-
-  handleInstructionsChange(e){
-    this.setState({instructions: e.target.value})
+  handleRemove(index){
+    let ingredients = this.state.ingredients
+    ingredients.splice(index, 1);
+    this.setState({
+      ingredients: ingredients
+    })
   }
 
   render(){
     let recipe = {
-            name: this.state.title,
+            title: this.state.title,
             hours: this.state.hours,
             mins: this.state.mins,
-            ingredients: this.state.ingredients.split(/, ?/),
+            ingredients: this.state.ingredients,
             instructions: this.state.instructions,
             dietary: this.state.dietary
           }
@@ -74,25 +79,43 @@ class Form extends Component{
           name="title" 
           placeholder="Enter Recipe Title..."
           value={this.state.title}
-          onChange={this.handleTitleChange}/>
+          onChange={this.handleChange}/>
         <br/>
         Ingredients:<br/>
-        <textarea 
-          name="ingredients"
-          rows="4"
-          cols="50"
-          placeholder="Enter ingredients seperated by commas..."
-          value={this.state.ingredients}
-          onChange={this.handleIngredientsChange}/>
+        {this.state.ingredients.map((ingredient, index) =>
+          <div key={index}>
+            {ingredient.type} {ingredient.quant} {ingredient.meas} 
+            <span onClick={()=>{this.handleRemove(index)}}>X</span>
+          </div>)}
+        <input 
+          type="text" 
+          name="ingredientType" 
+          placeholder="Ingredient..."
+          value={this.state.ingredientType}
+          onChange={this.handleChange}/>
+        <input 
+          type="number" 
+          name="ingredientQuant" 
+          placeholder="Quantity..."
+          value={this.state.ingredientQuant}
+          onChange={this.handleChange}/>
+        <input 
+          type="text" 
+          name="ingredientMeas" 
+          placeholder="Measurement..."
+          value={this.state.ingredientMeas}
+          onChange={this.handleChange}/>
+        <br/>
+        <button type="button" onClick={this.handleIngredientsAdd}>Add Ingredient</button>
         <br/>
         Directions:<br/>
         <textarea 
-          name="directions"
+          name="instructions"
           rows="4"
           cols="50"
           placeholder="Enter cooking instructions..."
           value={this.state.instructions}
-          onChange={this.handleInstructionsChange}/>
+          onChange={this.handleChange}/>
         <br/>
         Cooking Time:<br/>
         <input 
@@ -100,18 +123,18 @@ class Form extends Component{
           name="hours" 
           placeholder="Hours..."
           value={this.state.hours}
-          onChange={this.handleHourChange}/>
+          onChange={this.handleChange}/>
         <input 
           type="number" 
           name="mins" 
           placeholder="Minutes..."
           value={this.state.mins}
-          onChange={this.handleMinChange}/>
+          onChange={this.handleChange}/>
         <br/>
         Dietary needs?<br/>
         <select 
           name="dietary"
-          onChange={this.handleDietaryChange}
+          onChange={this.handleChange}
           value={this.state.dietary}>
           <option value="null">None</option>
           <option value="vegetarian">Vegetarian</option>
