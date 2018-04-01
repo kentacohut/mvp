@@ -20,8 +20,8 @@ app.get('/api/cookbook', (req, res)=>{
 });
 
 app.get('/api/recipe/get', (req, res)=>{
-  let name = req.query.name;
-  db.findOne(name, (error, recipe)=>{
+  let title = req.query.title;
+  db.findOne(title, (error, recipe)=>{
     if(error) {
       console.log(error);
     } else {
@@ -30,12 +30,24 @@ app.get('/api/recipe/get', (req, res)=>{
   })
 });
 
+app.get('/api/recipe/remove', (req, res)=>{
+  let title = req.query.title;
+  db.removeOne(title, (error, result)=>{
+    if(error) {
+      console.log(error);
+    } else {
+      res.send(`Removed recipe!`);
+    }
+  })
+});
+
 app.post('/api/recipe/post', (req, res)=>{
   let post = req.body;
   let recipe = {
-    name: post.name,
+    title: post.title,
     directions: post.directions,
-    time: post.time,
+    mins: post.mins,
+    hours: post.hours,
     ingredients: post.ingredients,
     dietary: post.dietary,
     yields: post.yields,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Form from './Components/Form.js';
+import Search from './Components/Search.js';
 import Recipe from './Components/Recipe.js';
 import Cookbook from './Components/Cookbook.js';
 import axios from 'axios';
@@ -10,10 +11,12 @@ class App extends Component {
     super(props);
     this.state = {
       cookbook: [],
-      selected: null
+      selected: null,
+      selectedIndex: null
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRecipeSelect = this.handleRecipeSelect.bind(this);
+    this.handleRemoveRecipe = this.handleRemoveRecipe.bind(this);
   }
 
   componentDidMount(){
@@ -25,8 +28,9 @@ class App extends Component {
     let that = this;
     axios.get('/api/cookbook')
     .then((response)=>{
+      console.log(response.data);
       for(let i = 0; i < response.data.length; i++) {
-        recipes.push(response.data[i].name);
+        recipes.push(response.data[i].title);
       }
       that.setState({
         cookbook: recipes
@@ -37,10 +41,9 @@ class App extends Component {
     })
   }
 
-  handleSubmit(event, recipe){
+  handleSubmit(recipe){
     console.log(recipe);
     let that = this;
-    event.preventDefault();
     axios.post('/api/recipe/post', recipe)
     .then((response)=>{
       that.getRecipes();
@@ -55,12 +58,13 @@ class App extends Component {
     let that = this;
     axios.get('/api/recipe/get', {
       params: {
-        name: title
+        title: title
       }
     })
     .then((response)=>{
       that.setState({
-        selected: response.data
+        selected: response.data,
+        selectedIndex: index
       });
     })
     .catch((error)=>{
@@ -68,23 +72,49 @@ class App extends Component {
     })
   }
 
+  handleRemoveRecipe(index, title){
+    let that = this
+    if (window.confirm('This will permanently remove the recipe.')) {
+      axios.get('/api/recipe/remove', {
+        params: {
+          title: title
+        }
+      })
+      .then((response)=>{
+        console.log(response);
+        that.setState({
+          selected: null,
+          selectedIndex: null
+        });
+        that.getRecipes();
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
+    }
+  }
+
   render() {
     return (
       <div className="App">
         <div className="App-header"> 
-          <h1>RecipeVault</h1>
+          <div className="logo"></div>
+          <div className="title">RecipeVault</div>
         </div>
         <div className="top">
+        <Search />
         <Form 
           handleSubmit={this.handleSubmit}/>
         <Cookbook 
+          className="cookbook"
           cookbook={this.state.cookbook} 
           select={this.handleRecipeSelect}/>
         </div>
         <div className="display">
-          <h2>Recipe</h2>
           <Recipe 
-            recipe={this.state.selected}/>
+            recipe={this.state.selected}
+            remove={this.handleRemoveRecipe}
+            recipeIndex={this.state.selectedIndex}/>
         </div>
       </div>
     );

@@ -6,9 +6,7 @@ class Form extends Component{
     this.state = {
       title: '',
       ingredients: [],
-      ingredientType: '',
-      ingredientQuant: '',
-      ingredientMeas: '',
+      ingredientText: '',
       hours: '',
       mins: '',
       dietary: '',
@@ -26,19 +24,15 @@ class Form extends Component{
 
   handleIngredientsAdd(){
     let ingredients = this.state.ingredients;
-    let item = {
-      type: this.state.ingredientType,
-      quant: this.state.ingredientQuant,
-      meas: this.state.ingredientMeas
+    if(this.state.ingredientText){
+      ingredients.push(this.state.ingredientText);
+      this.setState({
+        ingredients: ingredients,
+        ingredientText: ''
+      })
+    } else {
+      alert('You cannot add nothing!')
     }
-    ingredients.push(item);
-    this.setState({
-      ingredients: ingredients,
-      ingredientType: '',
-      ingredientMeas: '',
-      ingredientQuant: ''
-    })
-    console.log(item)
   }
 
   handleRemove(index){
@@ -55,23 +49,32 @@ class Form extends Component{
             hours: this.state.hours,
             mins: this.state.mins,
             ingredients: this.state.ingredients,
-            instructions: this.state.instructions,
+            directions: this.state.instructions,
             dietary: this.state.dietary
           }
     return (
-      <div className="entry">
+      <div className="form">
         <h2>Enter Your Recipe</h2>
         <form 
         onSubmit={(event) => {
-          this.props.handleSubmit(event, recipe);
-          this.setState({
-            title: '',
-            ingredients: '',
-            hours: '',
-            mins: '',
-            dietary: '',
-            instructions: ''
-            });
+          event.preventDefault();
+          if(!this.state.title){
+            alert('Enter a recipe title!');
+          } else if (this.state.ingredients < 1) {
+            alert('Add some ingredients!');
+          } else if (!this.state.instructions) {
+            alert('Add some directions!');
+          } else {
+            this.props.handleSubmit(recipe);
+            this.setState({
+              title: '',
+              ingredients: [],
+              hours: '',
+              mins: '',
+              dietary: '',
+              instructions: ''
+              });
+          }
         }}>
         Recipe Title:<br/>
         <input 
@@ -84,26 +87,16 @@ class Form extends Component{
         Ingredients:<br/>
         {this.state.ingredients.map((ingredient, index) =>
           <div key={index}>
-            {ingredient.type} {ingredient.quant} {ingredient.meas} 
-            <span onClick={()=>{this.handleRemove(index)}}>X</span>
+            {ingredient}
+            <span 
+              className="removeIngredient"
+              onClick={()=>{this.handleRemove(index)}}> - X</span>
           </div>)}
         <input 
           type="text" 
-          name="ingredientType" 
+          name="ingredientText" 
           placeholder="Ingredient..."
-          value={this.state.ingredientType}
-          onChange={this.handleChange}/>
-        <input 
-          type="number" 
-          name="ingredientQuant" 
-          placeholder="Quantity..."
-          value={this.state.ingredientQuant}
-          onChange={this.handleChange}/>
-        <input 
-          type="text" 
-          name="ingredientMeas" 
-          placeholder="Measurement..."
-          value={this.state.ingredientMeas}
+          value={this.state.ingredientText}
           onChange={this.handleChange}/>
         <br/>
         <button type="button" onClick={this.handleIngredientsAdd}>Add Ingredient</button>

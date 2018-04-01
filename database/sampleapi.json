@@ -1,5 +1,3 @@
-https://api.edamam.com/search?q=chicken&app_id=d1c81c6e&app_key=b7067c92ec385f79f059a303c5739c3f&to=10
--------------------------------------------------------------------------
 {
   "q" : "chicken",
   "from" : 0,
