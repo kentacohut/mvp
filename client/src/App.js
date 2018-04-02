@@ -12,11 +12,13 @@ class App extends Component {
     this.state = {
       cookbook: [],
       selected: null,
-      selectedIndex: null
+      selectedIndex: null,
+      fromSearch: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRecipeSelect = this.handleRecipeSelect.bind(this);
     this.handleRemoveRecipe = this.handleRemoveRecipe.bind(this);
+    this.handleSearchSelect = this.handleSearchSelect.bind(this);
   }
 
   componentDidMount(){
@@ -41,7 +43,6 @@ class App extends Component {
   }
 
   handleSubmit(recipe){
-    console.log(recipe);
     let that = this;
     axios.post('/api/recipe/post', recipe)
     .then((response)=>{
@@ -53,7 +54,6 @@ class App extends Component {
   }
 
   handleRecipeSelect(title, index){
-    console.log(title, index);
     let that = this;
     axios.get('/api/recipe/get', {
       params: {
@@ -63,7 +63,8 @@ class App extends Component {
     .then((response)=>{
       that.setState({
         selected: response.data,
-        selectedIndex: index
+        selectedIndex: index,
+        fromSearch: false
       });
     })
     .catch((error)=>{
@@ -93,6 +94,13 @@ class App extends Component {
     }
   }
 
+  handleSearchSelect(recipe){
+    this.setState({
+      selected: recipe,
+      fromSearch: true
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -101,17 +109,21 @@ class App extends Component {
           <div className="title">RecipeVault</div>
         </div>
         <div className="top">
-        <Search />
-        <Form 
-          handleSubmit={this.handleSubmit}/>
-        <Cookbook 
-          className="cookbook"
-          cookbook={this.state.cookbook} 
-          select={this.handleRecipeSelect}/>
+          <Search 
+            select={this.handleSearchSelect}
+          />
+          <Form 
+            handleSubmit={this.handleSubmit}/>
+          <Cookbook 
+            className="cookbook"
+            cookbook={this.state.cookbook} 
+            select={this.handleRecipeSelect}/>
         </div>
         <div className="display">
           <Recipe 
             recipe={this.state.selected}
+            search={this.state.fromSearch}
+            save={this.handleSubmit}
             remove={this.handleRemoveRecipe}
             recipeIndex={this.state.selectedIndex}/>
         </div>

@@ -22,19 +22,10 @@
   font-size: 24px;
 }
 
-.App-title {
-  font-size: 1.5em;
-}
-
-.App .entry {
-  color: black;
-  text-align: left;
-  font-weight: bold;
-}
-
 .App .top {
   display: flex;
   justify-content: space-evenly;
+  height: 450px;
 }
 
 .display {
@@ -46,7 +37,24 @@
   width: 600px;
 }
 
-.entry:hover{
+.entry {
+  color: black;
+  text-align: left;
+  font-weight: bold;
+}
+
+.entry:hover {
+  cursor: pointer;
+  color: grey;
+}
+
+.result {
+  color: black;
+  text-align: left;
+  font-weight: bold;
+}
+
+.result:hover{
   cursor: pointer;
   color: grey;
 }
@@ -60,6 +68,19 @@
 }
 
 .recipeCard .removeRecipe:hover {
+  color: grey;
+  cursor: pointer;
+}
+
+.recipeCard .saveRecipe {
+  width: 150px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.recipeCard .saveRecipe:hover {
   color: grey;
   cursor: pointer;
 }

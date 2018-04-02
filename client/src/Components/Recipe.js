@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Recipe = ({recipe, remove, recipeIndex})=>{
+const Recipe = ({recipe, remove, recipeIndex, search, save})=>{
   return ( 
     !recipe ? <div>Select a recipe from your cookbook...</div> : 
     <div className="recipeCard">
@@ -11,7 +11,10 @@ const Recipe = ({recipe, remove, recipeIndex})=>{
       {recipe.hours ? recipe.hours + ' hrs' : ''} {recipe.mins ? recipe.mins + ' mins' : ''}
       <h4>Directions</h4>
       {recipe.directions}
-      <div className="removeRecipe" onClick={()=>remove(recipeIndex, recipe.title)}>Remove Recipe</div>
+      {!search ?
+        <div className="removeRecipe" onClick={()=>remove(recipeIndex, recipe.title)}>Remove Recipe</div> :
+        <div className="saveRecipe" onClick={()=>save(recipe)}>Save Recipe</div>
+      }
     </div>
   ) 
 }

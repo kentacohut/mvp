@@ -4,8 +4,8 @@ import axios from 'axios';
 import api from '../api.js';
 
 class Search extends Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       recipeSearch: '',
       searchResults: []
@@ -64,7 +64,13 @@ class Search extends Component{
         onChange={this.handleChange}/>
       <input type ="submit"/>
       </form>
-      {this.state.searchResults.map((result) => <Result result={result}/>)}
+      {this.state.searchResults.map((result, index)=>{
+          return <Result 
+            key={index} 
+            select={this.props.select} 
+            result={result}/>
+        }
+      )}
     </div>
     )
   }
